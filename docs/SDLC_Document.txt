@@ -1,0 +1,518 @@
+═══════════════════════════════════════════════════════════════════════
+SOFTWARE DEVELOPMENT LIFE CYCLE (SDLC) DOCUMENT
+Kimbi Bank Management Application
+═══════════════════════════════════════════════════════════════════════
+
+Project: Kimbi Bank Management System
+Course: INF 151 - Object-Oriented Programming with Java / Software Engineering
+Institution: University of Yaoundé I
+Date: December 18, 2025
+Version: 1.0
+
+═══════════════════════════════════════════════════════════════════════
+INTRODUCTION
+═══════════════════════════════════════════════════════════════════════
+
+This document describes the Software Development Life Cycle (SDLC) followed
+for the Kimbi Bank Management Application project. The SDLC is a structured approach
+to software development that ensures quality, efficiency, and proper planning
+throughout the entire development process.
+
+The SDLC consists of six main phases:
+1. Requirement Analysis
+2. System Design
+3. Implementation
+4. Testing
+5. Deployment
+6. Maintenance
+
+Each phase is explained in detail below with specific activities performed
+for this project.
+
+
+═══════════════════════════════════════════════════════════════════════
+PHASE 1: REQUIREMENT ANALYSIS
+═══════════════════════════════════════════════════════════════════════
+
+Purpose:
+--------
+To understand what the system needs to do and document all requirements before
+starting development.
+
+Activities Performed:
+--------------------
+1. Problem Identification
+   - Identified the need for a simple banking system demonstration
+   - Recognized the educational goal: learn OOP concepts through practical application
+   - Understood the academic constraints (time, individual work, presentation)
+
+2. Stakeholder Analysis
+   - Primary stakeholder: Course instructor (evaluates OOP and SE knowledge)
+   - Secondary stakeholder: Student (learning and presenting)
+   - End user: Demonstration audience (classmates)
+
+3. Functional Requirements Gathering
+   - Account creation functionality
+   - Money withdrawal capability
+   - Money transfer between accounts
+   - Balance inquiry feature
+   - Transaction history tracking
+   - User-friendly menu system
+
+4. Non-Functional Requirements
+   - Console-based interface (no GUI required)
+   - Simple and understandable code (beginner-friendly)
+   - Proper OOP implementation (classes, objects, encapsulation)
+   - Clear documentation and comments
+   - Version control using Git/GitHub
+
+5. Constraints Identified
+   - Limited development time (urgent deadline)
+   - Individual project (no team collaboration)
+   - Must work on multiple computers (home and school)
+   - No database (in-memory storage only)
+   - Academic presentation requirement
+
+Deliverables from This Phase:
+-----------------------------
+✓ Software Requirements Specification (SRS) Document
+✓ List of functional and non-functional requirements
+✓ Clear understanding of project scope and limitations
+
+
+═══════════════════════════════════════════════════════════════════════
+PHASE 2: SYSTEM DESIGN
+═══════════════════════════════════════════════════════════════════════
+
+Purpose:
+--------
+To plan the technical architecture and structure of the application before
+writing any code.
+
+Activities Performed:
+--------------------
+1. System Architecture Design
+   - Decided on a layered architecture:
+     * Presentation Layer: Main class with menu (user interaction)
+     * Business Logic Layer: Bank class (manages operations)
+     * Data Layer: Account and Transaction classes (data models)
+
+2. Class Design (Object-Oriented Analysis)
+   
+   A. Transaction Class
+      - Purpose: Represent a single banking transaction
+      - Attributes:
+        * transactionType (String): "DEPOSIT", "WITHDRAWAL", "TRANSFER"
+        * amount (double): Money amount involved
+        * date (String): When transaction occurred
+      - Methods:
+        * Constructor to initialize transaction
+        * toString() to display transaction details
+   
+   B. Account Class
+      - Purpose: Represent a bank account
+      - Attributes:
+        * accountNumber (String): Unique identifier
+        * accountHolderName (String): Owner's name
+        * balance (double): Current money in account
+        * transactions (ArrayList<Transaction>): History of all transactions
+      - Methods:
+        * deposit(amount): Add money to account
+        * withdraw(amount): Remove money from account
+        * getBalance(): Return current balance
+        * addTransaction(): Record a transaction
+        * getTransactionHistory(): Display all transactions
+   
+   C. Bank Class
+      - Purpose: Manage all accounts and operations
+      - Attributes:
+        * accounts (ArrayList<Account>): List of all bank accounts
+        * accountCounter (int): Generate unique account numbers
+      - Methods:
+        * createAccount(name): Create new account
+        * findAccount(accountNumber): Search for specific account
+        * withdraw(accountNumber, amount): Process withdrawal
+        * transfer(fromAccount, toAccount, amount): Process transfer
+        * displayBalance(accountNumber): Show account balance
+        * displayTransactionHistory(accountNumber): Show transaction list
+   
+   D. Main Class
+      - Purpose: Program entry point and user interface
+      - Responsibilities:
+        * Display menu options
+        * Get user input
+        * Call appropriate Bank methods
+        * Handle errors and display messages
+        * Control program flow (loop until exit)
+
+3. Data Flow Design
+   User Input → Main.java → Bank.java → Account.java → Transaction.java
+   Results ← Main.java ← Bank.java ← Account.java ← Transaction.java
+
+4. Interface Design (Console Menu)
+   ┌─────────────────────────────────┐
+   │   BANK MANAGEMENT SYSTEM        │
+   │                                 │
+   │   1. Create Account             │
+   │   2. Withdraw Money             │
+   │   3. Transfer Money             │
+   │   4. Check Balance              │
+   │   5. View Transaction History   │
+   │   6. Exit                       │
+   │                                 │
+   │   Enter your choice: _          │
+   └─────────────────────────────────┘
+
+5. Error Handling Strategy
+   - Validate all user inputs
+   - Check for sufficient balance before withdrawal
+   - Verify account existence before operations
+   - Display helpful error messages
+   - Prevent application crashes
+
+Deliverables from This Phase:
+-----------------------------
+✓ Class diagrams (conceptual)
+✓ System architecture documentation
+✓ Interface mockup
+✓ Data flow diagrams
+✓ Clear understanding of how classes interact
+
+
+═══════════════════════════════════════════════════════════════════════
+PHASE 3: IMPLEMENTATION (CODING)
+═══════════════════════════════════════════════════════════════════════
+
+Purpose:
+--------
+To write the actual Java code based on the design created in Phase 2.
+
+Activities Performed:
+--------------------
+1. Development Environment Setup
+   - Installed IntelliJ IDEA Community Edition 2025.2.5
+   - Installed Java JDK (OpenJDK 25.0.1 - Eclipse Temurin)
+   - Configured Git for version control
+   - Created GitHub repository: BankManagementApp
+
+2. Project Structure Creation
+   _BankManagementApp/
+   ├── docs/
+   │   ├── SRS_Document.txt
+   │   └── SDLC_Document.txt
+   ├── src/
+   │   ├── Transaction.java
+   │   ├── Account.java
+   │   ├── Bank.java
+   │   └── Main.java
+   └── README.md
+
+3. Coding Sequence (Bottom-Up Approach)
+   
+   Step 1: Transaction.java
+   - Created simplest class first (data model)
+   - Implemented constructor and toString() method
+   - Added inline comments explaining each line
+   
+   Step 2: Account.java
+   - Implemented account attributes
+   - Created deposit and withdraw methods
+   - Added transaction history tracking
+   - Implemented balance management
+   
+   Step 3: Bank.java
+   - Implemented account management (create, find)
+   - Created withdrawal logic with validation
+   - Created transfer logic (withdraw from source, deposit to destination)
+   - Added error handling for all operations
+   
+   Step 4: Main.java
+   - Created menu display logic
+   - Implemented user input handling
+   - Connected menu options to Bank methods
+   - Added program loop (run until user exits)
+   - Implemented test data for demonstration
+
+4. Coding Standards Followed
+   - Used meaningful variable names (accountNumber, not x)
+   - Added comments explaining every important line
+   - Followed Java naming conventions (camelCase)
+   - Kept methods short and focused
+   - Used proper indentation for readability
+
+5. Version Control
+   - Initialized Git repository
+   - Created meaningful commits after each major feature
+   - Pushed code to GitHub regularly
+   - Maintained clean commit history
+
+Deliverables from This Phase:
+-----------------------------
+✓ Complete Java source code (4 classes)
+✓ Inline code documentation (comments)
+✓ Working application
+✓ Git repository with commit history
+✓ GitHub repository for sharing
+
+
+═══════════════════════════════════════════════════════════════════════
+PHASE 4: TESTING
+═══════════════════════════════════════════════════════════════════════
+
+Purpose:
+--------
+To verify that the application works correctly and handles all scenarios
+including edge cases and errors.
+
+Activities Performed:
+--------------------
+1. Unit Testing (Individual Components)
+   
+   A. Transaction Class Testing
+      ✓ Test: Create transaction with valid data
+      ✓ Test: toString() displays correct format
+   
+   B. Account Class Testing
+      ✓ Test: Create account with valid name
+      ✓ Test: Deposit positive amount
+      ✓ Test: Withdraw with sufficient balance
+      ✓ Test: Withdraw with insufficient balance (should fail)
+      ✓ Test: Transaction history records correctly
+   
+   C. Bank Class Testing
+      ✓ Test: Create multiple accounts
+      ✓ Test: Find existing account
+      ✓ Test: Find non-existent account (should return null)
+      ✓ Test: Withdraw from valid account
+      ✓ Test: Transfer between two valid accounts
+      ✓ Test: Transfer with insufficient funds (should fail)
+
+2. Integration Testing (Components Working Together)
+   ✓ Test: Create account → Deposit → Check balance
+   ✓ Test: Create two accounts → Transfer money → Check both balances
+   ✓ Test: Create account → Withdraw → View transaction history
+   ✓ Test: Multiple operations → Verify history shows all transactions
+
+3. System Testing (Complete Application)
+   ✓ Test: Run complete menu flow
+   ✓ Test: Create account through menu
+   ✓ Test: Perform withdrawal through menu
+   ✓ Test: Perform transfer through menu
+   ✓ Test: Check balance through menu
+   ✓ Test: View transaction history through menu
+   ✓ Test: Exit application properly
+
+4. User Acceptance Testing (Real-World Scenarios)
+   
+   Scenario 1: New Customer Opens Account
+   - Create account for "John Doe"
+   - Verify account number is generated
+   - Check initial balance is 0
+   Result: ✓ PASSED
+   
+   Scenario 2: Customer Deposits and Withdraws
+   - Deposit $1000
+   - Withdraw $300
+   - Check balance shows $700
+   Result: ✓ PASSED
+   
+   Scenario 3: Transfer Between Accounts
+   - Create Account A with $1000
+   - Create Account B with $500
+   - Transfer $200 from A to B
+   - Verify A has $800 and B has $700
+   Result: ✓ PASSED
+   
+   Scenario 4: Invalid Operations
+   - Try to withdraw $2000 from account with $1000
+   - Verify error message displayed
+   - Verify balance unchanged
+   Result: ✓ PASSED
+
+5. Error Handling Testing
+   ✓ Test: Invalid menu choice (number not 1-6)
+   ✓ Test: Invalid account number format
+   ✓ Test: Negative withdrawal amount
+   ✓ Test: Negative transfer amount
+   ✓ Test: Transfer to non-existent account
+   ✓ Test: All error messages display correctly
+
+6. Test Data Used
+   - Account 1: "Alice Johnson" - Balance: $5000
+   - Account 2: "Bob Smith" - Balance: $3000
+   - Account 3: "Charlie Brown" - Balance: $1500
+   - Various transaction amounts: $100, $500, $1000
+
+Deliverables from This Phase:
+-----------------------------
+✓ Test scenarios documentation
+✓ Test results (all tests passed)
+✓ Bug fixes (if any were found)
+✓ Verified working application
+
+
+═══════════════════════════════════════════════════════════════════════
+PHASE 5: DEPLOYMENT
+═══════════════════════════════════════════════════════════════════════
+
+Purpose:
+--------
+To make the application available for use and prepare for presentation.
+
+Activities Performed:
+--------------------
+1. Code Finalization
+   - Reviewed all code for clarity
+   - Ensured all comments are accurate
+   - Verified coding standards compliance
+   - Removed any debug/test code
+
+2. Documentation Finalization
+   - Completed SRS Document
+   - Completed SDLC Document
+   - Created README.md for GitHub
+   - Added inline code comments
+
+3. Version Control and Repository
+   - Final commit with message: "Complete Bank Management Application"
+   - Pushed all code to GitHub
+   - Verified repository is public and accessible
+   - Ensured folder structure is clean
+
+4. Multi-Computer Deployment
+   
+   PC1 (Home Computer):
+   - Location: C:\Users\ArreyBeatz\OneDrive\_BankManagementApp\
+   - Status: Development complete
+   - Synced to OneDrive
+   
+   PC2 (School Laptop):
+   - Clone repository from GitHub
+   - Location: C:\Users\aroev\OneDrive\_BankManagementApp\
+   - Verify application runs correctly
+   - Prepare for live demonstration
+
+5. Presentation Preparation
+   - Created demonstration script
+   - Prepared explanation of OOP concepts
+   - Prepared explanation of SDLC phases
+   - Practiced running the application
+   - Prepared answers to potential questions
+
+6. Backup Strategy
+   - Primary backup: GitHub repository
+   - Secondary backup: OneDrive sync
+   - Emergency backup: USB drive with code
+
+Deliverables from This Phase:
+-----------------------------
+✓ Application deployed on PC1 (home)
+✓ Application deployed on PC2 (school)
+✓ GitHub repository accessible
+✓ All documentation complete
+✓ Presentation materials ready
+
+
+═══════════════════════════════════════════════════════════════════════
+PHASE 6: MAINTENANCE
+═══════════════════════════════════════════════════════════════════════
+
+Purpose:
+--------
+To plan for future updates, bug fixes, and improvements.
+
+Activities Performed:
+--------------------
+1. Immediate Maintenance (During Presentation)
+   - Be ready to fix any bugs discovered during demo
+   - Have backup plan if technical issues occur
+   - Be prepared to explain any code section
+
+2. Short-Term Maintenance (After Presentation)
+   - Fix any bugs identified by instructor
+   - Improve code based on feedback
+   - Update documentation if needed
+   - Add any suggested features
+
+3. Long-Term Maintenance Considerations
+   
+   Potential Future Enhancements:
+   - Add data persistence (save to file)
+   - Implement account authentication (PIN/password)
+   - Add interest calculation feature
+   - Create loan management functionality
+   - Add GUI (Graphical User Interface)
+   - Support multiple currencies
+   - Generate account statements
+   
+   Code Maintainability Features Already Implemented:
+   ✓ Clear class separation (easy to modify individual components)
+   ✓ Inline comments (easy to understand for future updates)
+   ✓ Meaningful variable names (self-documenting code)
+   ✓ Modular design (easy to add new features)
+
+4. Documentation Maintenance
+   - Keep README.md updated
+   - Update version numbers when changes are made
+   - Document any bug fixes
+   - Maintain changelog in GitHub
+
+5. Version Control Best Practices
+   - Use descriptive commit messages
+   - Create branches for new features
+   - Tag releases (v1.0, v1.1, etc.)
+   - Keep main branch stable
+
+Deliverables from This Phase:
+-----------------------------
+✓ Maintenance plan documented
+✓ Future enhancement ideas listed
+✓ Support strategy defined
+✓ Version control workflow established
+
+
+═══════════════════════════════════════════════════════════════════════
+CONCLUSION
+═══════════════════════════════════════════════════════════════════════
+
+This SDLC document demonstrates a structured approach to software development
+for the Bank Management Application project. By following these six phases:
+
+1. ✓ Requirement Analysis - We understood WHAT to build
+2. ✓ System Design - We planned HOW to build it
+3. ✓ Implementation - We wrote the code
+4. ✓ Testing - We verified it works correctly
+5. ✓ Deployment - We made it ready for use
+6. ✓ Maintenance - We planned for future updates
+
+We ensured a high-quality, well-documented, and maintainable application that
+demonstrates both Object-Oriented Programming concepts and Software Engineering
+best practices.
+
+Key Success Factors:
+-------------------
+✓ Clear requirements from the start
+✓ Proper design before coding
+✓ Bottom-up implementation approach
+✓ Comprehensive testing
+✓ Good version control practices
+✓ Thorough documentation
+✓ Multi-computer deployment strategy
+✓ Presentation readiness
+
+This structured approach ensures the project meets academic requirements and
+demonstrates professional software development practices.
+
+
+═══════════════════════════════════════════════════════════════════════
+END OF SOFTWARE DEVELOPMENT LIFE CYCLE DOCUMENT
+═══════════════════════════════════════════════════════════════════════
+
+
+
+
+
+
+
+
+
